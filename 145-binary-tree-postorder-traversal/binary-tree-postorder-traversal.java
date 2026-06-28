@@ -20,26 +20,57 @@ class Solution {
         {
             return ans;
         }
-        Stack<TreeNode> st1 = new Stack<>();
-        Stack<TreeNode> st2 = new Stack<>();
-        st1.push(root);
-        while(!st1.isEmpty())
+
+        Stack<TreeNode> st = new Stack<>();
+        TreeNode curr = root;
+        while(curr != null || !st.isEmpty())
         {
-            TreeNode node = st1.pop();
-            st2.push(node);
-            if(node.left != null)
+            if(curr != null)
             {
-                st1.push(node.left);
+                st.push(curr);
+                curr = curr.left;
             }
-            if(node.right != null)
+            else
             {
-                st1.push(node.right);
+                TreeNode temp = st.peek().right;
+                if(temp == null)
+                {
+                    temp = st.pop();
+                    ans.add(temp.val);
+                    while(!st.isEmpty() && temp == st.peek().right)
+                    {
+                        temp = st.pop();
+                        ans.add(temp.val);
+                    }
+                }
+                else
+                {
+                    curr = temp;
+                }
             }
         }
-        while(!st2.isEmpty())
-        {
-            ans.add(st2.pop().val);
-        }
+
+        
+        // Stack<TreeNode> st1 = new Stack<>();
+        // Stack<TreeNode> st2 = new Stack<>();
+        // st1.push(root);
+        // while(!st1.isEmpty())
+        // {
+        //     TreeNode node = st1.pop();
+        //     st2.push(node);
+        //     if(node.left != null)
+        //     {
+        //         st1.push(node.left);
+        //     }
+        //     if(node.right != null)
+        //     {
+        //         st1.push(node.right);
+        //     }
+        // }
+        // while(!st2.isEmpty())
+        // {
+        //     ans.add(st2.pop().val);
+        // }
         // helper(ans,root);
         return ans;
     }
