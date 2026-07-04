@@ -15,10 +15,10 @@
  */
 class Solution {
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        if(preorder.length != inorder.length)
-        {
-            return null;
-        }
+        // if(preorder.length != inorder.length)
+        // {
+        //     return null;
+        // }
         HashMap<Integer,Integer> map = new HashMap<>();
         for(int i = 0;i < inorder.length;i++)
         {
