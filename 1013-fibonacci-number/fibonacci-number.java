@@ -16,20 +16,38 @@ class Solution {
 
         // Tabulation
 
+        // if(n == 0)
+        // {
+        //     return n;
+        // }
+        // int[] dp = new int[n + 1];
+        // dp[0] = 0;
+        // dp[1] = 1;
+
+        // for(int i = 2;i <= n;i++)
+        // {
+        //     dp[i] = dp[i - 1] + dp[i - 2];
+        // }
+
+        // return dp[n];
+
+        // TC - O(n) and SC - O(1) approach
+
         if(n == 0)
         {
             return n;
         }
-        int[] dp = new int[n + 1];
-        dp[0] = 0;
-        dp[1] = 1;
+        int prev = 1;
+        int prev2 = 0;
 
         for(int i = 2;i <= n;i++)
         {
-            dp[i] = dp[i - 1] + dp[i - 2];
+            int currSum = prev + prev2;
+            prev2 = prev;
+            prev = currSum;
         }
 
-        return dp[n];
+        return prev;
     }
 
     public int fibHelper(int n,int[] dp)
