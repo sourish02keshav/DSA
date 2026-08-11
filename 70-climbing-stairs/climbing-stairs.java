@@ -11,9 +11,9 @@ class Solution {
 
         // Memoization
 
-        int[] dp = new int[n + 1];
-        Arrays.fill(dp,-1);
-        return climbStairsHelper(n,dp);
+        // int[] dp = new int[n + 1];
+        // Arrays.fill(dp,-1);
+        // return climbStairsHelper(n,dp);
 
         // Tabulation
 
@@ -25,6 +25,19 @@ class Solution {
         //     dp[i] = dp[i - 1] + dp[i - 2];
         // }
         // return dp[n];
+
+        // Optimal Approach : TC - O(n) and SC - O(n)
+
+        int prev = 1;
+        int prev2 = prev;
+
+        for(int i = 2;i <= n;i++)
+        {
+            int currSum = prev + prev2;
+            prev2 = prev;
+            prev = currSum;
+        }
+        return prev;
     }
 
     public int climbStairsHelper(int n,int[] dp)
