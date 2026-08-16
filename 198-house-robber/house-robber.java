@@ -1,12 +1,30 @@
 class Solution {
     public int rob(int[] nums) {
 
-        // Memoization
+        // Tabulation
 
         int n = nums.length;
         int[] dp = new int[n];
-        Arrays.fill(dp,-1);
-        return robMemoization(n - 1,nums,dp);
+        dp[0] = nums[0];
+
+        for(int i = 1;i < n;i++)
+        {
+            int take = nums[i];
+            if(i > 1)
+            {
+                take += dp[i - 2];
+            }
+            int notTake = dp[i - 1];
+            dp[i] = Math.max(take,notTake);
+        }
+        return dp[n - 1];
+
+        // Memoization
+
+        // int n = nums.length;
+        // int[] dp = new int[n];
+        // Arrays.fill(dp,-1);
+        // return robMemoization(n - 1,nums,dp);
 
         // Recursion
         // return robHelper(nums.length - 1,nums);
