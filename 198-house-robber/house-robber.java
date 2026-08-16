@@ -1,7 +1,7 @@
 class Solution {
     public int rob(int[] nums) {
 
-        // TC - O(n) and SC - O(1)
+        // TC - O(n) and SC - O(1) approach
 
         int n = nums.length;
         int prev = nums[0];
@@ -9,11 +9,7 @@ class Solution {
 
         for(int i = 1;i < n;i++)
         {
-            int take = nums[i];
-            if(i > 1)
-            {
-                take += prev2;
-            }
+            int take = nums[i] + prev2;
             int notTake = prev;
             int currSum = Math.max(take,notTake);
             prev2 = prev;
