@@ -7,11 +7,7 @@ class Solution {
         int prev2 = 0;
         for(int i = 1;i < n;i++)
         {
-            int take = arr[i];
-            if(i > 1)
-            {
-                take += prev2;
-            }
+            int take = arr[i] + prev2;
             int notTake = prev;
             int currSum = Math.max(take,notTake);
             prev2 = prev;
