@@ -1,23 +1,44 @@
 class Solution {
     public int rob(int[] nums) {
 
-        // Tabulation
+        // TC - O(n) and SC - O(1)
 
         int n = nums.length;
-        int[] dp = new int[n];
-        dp[0] = nums[0];
+        int prev = nums[0];
+        int prev2 = nums[0];
 
         for(int i = 1;i < n;i++)
         {
             int take = nums[i];
             if(i > 1)
             {
-                take += dp[i - 2];
+                take += prev2;
             }
-            int notTake = dp[i - 1];
-            dp[i] = Math.max(take,notTake);
+            int notTake = prev;
+            int currSum = Math.max(take,notTake);
+            prev2 = prev;
+            prev = currSum;
         }
-        return dp[n - 1];
+
+        return prev;
+
+        // Tabulation
+
+        // int n = nums.length;
+        // int[] dp = new int[n];
+        // dp[0] = nums[0];
+
+        // for(int i = 1;i < n;i++)
+        // {
+        //     int take = nums[i];
+        //     if(i > 1)
+        //     {
+        //         take += dp[i - 2];
+        //     }
+        //     int notTake = dp[i - 1];
+        //     dp[i] = Math.max(take,notTake);
+        // }
+        // return dp[n - 1];
 
         // Memoization
 
