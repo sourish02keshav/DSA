@@ -1,32 +1,57 @@
 class Solution {
     public int uniquePaths(int m, int n) {
 
-        // Tabulation
+        // Space Optimization
 
-        int[][] dp = new int[m][n];
-        
+        int[] prev = new int[n];
         for(int i = 0;i < m;i++)
         {
+            int[] temp = new int[n];
             for(int j = 0;j < n;j++)
             {
                 if(i == 0 && j == 0)
                 {
-                    dp[i][j] = 1;
+                    temp[j] = 1;
                 }
                 else
                 {
-                    if(i > 0)
-                    {
-                        dp[i][j] += dp[i - 1][j];
-                    }
+                    temp[j] += prev[j];
                     if(j > 0)
                     {
-                        dp[i][j] += dp[i][j - 1];
+                        temp[j] += temp[j - 1];
                     }
                 }
             }
+            prev = temp;
         }
-        return dp[m - 1][n - 1];
+        return prev[n - 1];
+
+        // Tabulation - TC - O(m * n) and SC - O(m * n)
+
+        // int[][] dp = new int[m][n];
+        
+        // for(int i = 0;i < m;i++)
+        // {
+        //     for(int j = 0;j < n;j++)
+        //     {
+        //         if(i == 0 && j == 0)
+        //         {
+        //             dp[i][j] = 1;
+        //         }
+        //         else
+        //         {
+        //             if(i > 0)
+        //             {
+        //                 dp[i][j] += dp[i - 1][j];
+        //             }
+        //             if(j > 0)
+        //             {
+        //                 dp[i][j] += dp[i][j - 1];
+        //             }
+        //         }
+        //     }
+        // }
+        // return dp[m - 1][n - 1];
 
         // Memoization - TC - O(m * n) and SC - O((m - 1) + (n - 1)) + O(m * n)
 
