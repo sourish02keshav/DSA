@@ -4,7 +4,7 @@ class Solution {
         int m = obstacleGrid.length;
         int n = obstacleGrid[0].length;
 
-        // Space Optimization
+        // Space Optimization - TC - O(m * n) and SC - O(n)
 
         int[] prev = new int[n];
         for(int i = 0;i < m;i++)
@@ -34,7 +34,7 @@ class Solution {
 
         return prev[n - 1];
 
-        // Tabulation
+        // Tabulation - TC - O(m * n) and SC - O(m * n)
 
         // int[][] dp = new int[m][n];
         // for(int i = 0;i < m;i++)
@@ -64,7 +64,7 @@ class Solution {
         // }
         // return dp[m - 1][n - 1];
 
-        // Memoization
+        // Memoization - TC - O(m * n) and SC - O((m - 1) + (n - 1)) + O(m * n)
 
         // int[][] dp = new int[m][n];
         // for(int i = 0;i < m;i++)
@@ -77,7 +77,7 @@ class Solution {
 
         // return uniquePathsWithObstaclesMemoization(obstacleGrid,m,n,m - 1,n - 1,dp);
 
-        // Recursion
+        // Recursion - TC - O(2 ^ (m * n)) and SC - O(m * n)
         //return uniquePathsWithObstaclesHelper(obstacleGrid,m,n,m - 1,n - 1);
     }
 
