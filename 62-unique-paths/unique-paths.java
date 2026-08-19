@@ -1,19 +1,47 @@
 class Solution {
     public int uniquePaths(int m, int n) {
 
-        // Memoization
+        // Tabulation
 
         int[][] dp = new int[m][n];
+        
         for(int i = 0;i < m;i++)
         {
             for(int j = 0;j < n;j++)
             {
-                dp[i][j] = -1;
+                if(i == 0 && j == 0)
+                {
+                    dp[i][j] = 1;
+                }
+                else
+                {
+                    if(i > 0)
+                    {
+                        dp[i][j] += dp[i - 1][j];
+                    }
+                    if(j > 0)
+                    {
+                        dp[i][j] += dp[i][j - 1];
+                    }
+                }
             }
         }
-        return uniquePathsMemoization(m,n,m - 1,n - 1,dp);
+        return dp[m - 1][n - 1];
+
+        // Memoization - TC - O(m * n) and SC - O((m - 1) + (n - 1)) + O(m * n)
+
+        // int[][] dp = new int[m][n];
+        // for(int i = 0;i < m;i++)
+        // {
+        //     for(int j = 0;j < n;j++)
+        //     {
+        //         dp[i][j] = -1;
+        //     }
+        // }
+        // return uniquePathsMemoization(m,n,m - 1,n - 1,dp);
         
         // Recursion - TC - O(2 ^ (m * n)) and SC - O(m * n)
+
         //return uniquePathsHelper(m,n,m - 1,n - 1);
     }
 
