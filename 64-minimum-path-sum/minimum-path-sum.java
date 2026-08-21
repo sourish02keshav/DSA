@@ -3,7 +3,7 @@ class Solution {
         int m = grid.length;
         int n = grid[0].length;
 
-        // Space Optimization
+        // Space Optimization - TC - O(m * n) and SC - O(n)
 
         int[] prev = new int[n];
 
@@ -43,7 +43,7 @@ class Solution {
         }
         return prev[n - 1];
 
-        // Tabulation
+        // Tabulation - TC - O(m * n) and SC - O(m * n) 
 
         // int[][] dp = new int[m][n];
         // for(int i = 0;i < m;i++)
@@ -80,7 +80,7 @@ class Solution {
         // }
         // return dp[m - 1][n - 1];
 
-        // Memoization
+        // Memoization - TC - O(m * n) and SC - O(m * n) + O(path length)
         // int[][] dp = new int[m][n];
         // for(int i = 0;i < m;i++)
         // {
