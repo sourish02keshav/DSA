@@ -3,17 +3,52 @@ class Solution {
         int m = grid.length;
         int n = grid[0].length;
 
-        // Memoization
         int[][] dp = new int[m][n];
         for(int i = 0;i < m;i++)
         {
             for(int j = 0;j < n;j++)
             {
-                dp[i][j] = -1;
+                if(i == 0 && j == 0)
+                {
+                    dp[i][j] = grid[i][j];
+                }
+                else
+                {
+                    int down = grid[i][j];
+                    int right = grid[i][j];
+                    if(i > 0)
+                    {
+                        down += dp[i - 1][j];
+                    }
+                    else
+                    {
+                        down += 1000000;
+                    }
+                    if(j > 0)
+                    {
+                        right += dp[i][j - 1];
+                    }
+                    else
+                    {
+                        right += 1000000;
+                    }
+                    dp[i][j] = Math.min(down,right);
+                }
             }
         }
+        return dp[m - 1][n - 1];
 
-        return minPathSumMemoization(grid,m - 1,n - 1,dp);
+        // Memoization
+        // int[][] dp = new int[m][n];
+        // for(int i = 0;i < m;i++)
+        // {
+        //     for(int j = 0;j < n;j++)
+        //     {
+        //         dp[i][j] = -1;
+        //     }
+        // }
+
+        // return minPathSumMemoization(grid,m - 1,n - 1,dp);
 
         // Recursion
         //return minPathSumHelper(grid,m - 1,n - 1);
