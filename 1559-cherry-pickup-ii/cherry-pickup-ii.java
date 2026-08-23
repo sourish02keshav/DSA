@@ -5,18 +5,72 @@ class Solution {
 
         int[][][] dp = new int[m][n][n];
 
-        for(int i = 0;i < m;i++)
+        for(int j1 = 0;j1 < n;j1++)
         {
-            for(int j = 0;j < n;j++)
+            for(int j2 = 0;j2 < n;j2++)
             {
-                for(int k = 0;k < n;k++)
+                if(j1 == j2)
                 {
-                    dp[i][j][k] = -1;
+                    dp[m - 1][j1][j2] = grid[m - 1][j1];
+                }
+                else
+                {
+                    dp[m - 1][j1][j2] = grid[m - 1][j1] + grid[m - 1][j2];
                 }
             }
         }
 
-        return fMemoi(grid,0,0,n - 1,m,n,dp);
+        for(int i = m - 2;i >= 0;i--)
+        {
+            for(int j1 = 0;j1 < n;j1++)
+            {
+                for(int j2 = 0;j2 < n;j2++)
+                {
+                    int max = -100000;
+                    for(int dir1 = -1;dir1 <= 1;dir1++)
+                    {
+                        for(int dir2 = -1;dir2 <= 1;dir2++)
+                        {
+                            int value = 0;
+                            if(j1 == j2)
+                            {
+                                value += grid[i][j1];
+                            }
+                            else
+                            {
+                                value += grid[i][j1] + grid[i][j2];
+                            }
+                            if(j1 + dir1 >= 0 && j1 + dir1 < n && j2 + dir2 >= 0 && j2 + dir2 < n)
+                            {
+                                value += dp[i + 1][j1 + dir1][j2 + dir2];
+                            }
+                            else
+                            {
+                                value = -10000;
+                            }
+                            max = Math.max(max,value);
+                        }
+                    }
+                    dp[i][j1][j2] = max;
+                }
+            }
+        }
+
+        return dp[0][0][n - 1];
+        // Memoi
+
+        // for(int i = 0;i < m;i++)
+        // {
+        //     for(int j = 0;j < n;j++)
+        //     {
+        //         for(int k = 0;k < n;k++)
+        //         {
+        //             dp[i][j][k] = -1;
+        //         }
+        //     }
+        // }
+
+        // return fMemoi(grid,0,0,n - 1,m,n,dp);
 
         // Recursion
         // return f(grid,0,0,n - 1,m,n);
