@@ -3,34 +3,63 @@ class Solution {
         int m = triangle.size();
         List<List<Integer>> dp = new ArrayList<>();
 
-        // Tabulation
+        // Space Optimization
 
-        for(int i = 0;i < triangle.size();i++)
-        {
-            dp.add(new ArrayList<>());
-            for(int j = 0;j < triangle.get(i).size();j++)
-            {
-                dp.get(i).add(0);
-            }
-        }
-
+        List<Integer> next = new ArrayList<>();
         for(int i = m - 1;i >= 0;i--)
         {
+            List<Integer> temp = new ArrayList<>();
+            for(int j = 0;j < triangle.get(i).size();j++)
+            {
+                temp.add(0);
+            }
             for(int j = triangle.get(i).size() - 1;j >= 0;j--)
             {
                 if(i == m - 1)
                 {
-                    dp.get(i).set(j,triangle.get(i).get(j));
+                    temp.set(j,triangle.get(i).get(j));
                 }
                 else
                 {
-                    int left = triangle.get(i).get(j) + dp.get(i + 1).get(j);
-                    int right = triangle.get(i).get(j) + dp.get(i + 1).get(j + 1);
-                    dp.get(i).set(j,Math.min(left,right));
+                    int left = triangle.get(i).get(j) + next.get(j);
+                    int right = triangle.get(i).get(j) + next.get(j + 1);
+                    temp.set(j,Math.min(left,right));
                 }
             }
+            next = temp;
         }
-        return dp.get(0).get(0);
+
+        return next.get(0);
+
+
+        // Tabulation
+
+        // for(int i = 0;i < triangle.size();i++)
+        // {
+        //     dp.add(new ArrayList<>());
+        //     for(int j = 0;j < triangle.get(i).size();j++)
+        //     {
+        //         dp.get(i).add(0);
+        //     }
+        // }
+
+        // for(int i = m - 1;i >= 0;i--)
+        // {
+        //     for(int j = triangle.get(i).size() - 1;j >= 0;j--)
+        //     {
+        //         if(i == m - 1)
+        //         {
+        //             dp.get(i).set(j,triangle.get(i).get(j));
+        //         }
+        //         else
+        //         {
+        //             int left = triangle.get(i).get(j) + dp.get(i + 1).get(j);
+        //             int right = triangle.get(i).get(j) + dp.get(i + 1).get(j + 1);
+        //             dp.get(i).set(j,Math.min(left,right));
+        //         }
+        //     }
+        // }
+        // return dp.get(0).get(0);
 
         // Memoization
 
