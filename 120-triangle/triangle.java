@@ -3,20 +3,41 @@ class Solution {
         int m = triangle.size();
         int[][] dp = new int[m][m];
 
+        // Space optimization
+
+        int[] next = new int[m];
         for(int j = 0;j < m;j++)
         {
-            dp[m - 1][j] = triangle.get(m - 1).get(j);
+            next[j] = triangle.get(m - 1).get(j);
         }
 
         for(int i = m - 2;i >= 0;i--)
         {
+            int[] temp = new int[m];
             for(int j = i;j >= 0;j--)
             {
-                dp[i][j] = triangle.get(i).get(j) + Math.min(dp[i + 1][j],dp[i + 1][j + 1]);
+                temp[j] = triangle.get(i).get(j) + Math.min(next[j],next[j + 1]);
             }
+            next = temp;
         }
+        return next[0];
 
-        return dp[0][0];
+        // Tabulation
+
+        // for(int j = 0;j < m;j++)
+        // {
+        //     dp[m - 1][j] = triangle.get(m - 1).get(j);
+        // }
+
+        // for(int i = m - 2;i >= 0;i--)
+        // {
+        //     for(int j = i;j >= 0;j--)
+        //     {
+        //         dp[i][j] = triangle.get(i).get(j) + Math.min(dp[i + 1][j],dp[i + 1][j + 1]);
+        //     }
+        // }
+
+        // return dp[0][0];
 
         // Memoization
 
