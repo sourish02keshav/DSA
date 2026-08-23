@@ -6,7 +6,11 @@ class Solution {
         // Space Optimization
 
         List<Integer> next = new ArrayList<>();
-        for(int i = m - 1;i >= 0;i--)
+        for(int i = 0;i < m;i++)
+        {
+            next.add(triangle.get(m - 1).get(i));
+        }
+        for(int i = m - 2;i >= 0;i--)
         {
             List<Integer> temp = new ArrayList<>();
             for(int j = 0;j < triangle.get(i).size();j++)
@@ -15,16 +19,9 @@ class Solution {
             }
             for(int j = triangle.get(i).size() - 1;j >= 0;j--)
             {
-                if(i == m - 1)
-                {
-                    temp.set(j,triangle.get(i).get(j));
-                }
-                else
-                {
-                    int left = triangle.get(i).get(j) + next.get(j);
-                    int right = triangle.get(i).get(j) + next.get(j + 1);
-                    temp.set(j,Math.min(left,right));
-                }
+                int left = triangle.get(i).get(j) + next.get(j);
+                int right = triangle.get(i).get(j) + next.get(j + 1);
+                temp.set(j,Math.min(left,right));
             }
             next = temp;
         }
