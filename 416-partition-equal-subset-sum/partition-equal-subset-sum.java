@@ -18,17 +18,45 @@ class Solution {
 
     public boolean isSubsetSum(int n,int sum,int[] arr) {
 
-        // Memoization
-        int[][] dp = new int[n][sum + 1];
+        // Tabulation
+
+        boolean[][] dp = new boolean[n][sum + 1];
         for(int i = 0;i < n;i++)
         {
-            for(int j = 0;j <= sum;j++)
+            dp[i][0] = true;
+        }
+        if(arr[0] <= sum)
+        {
+            dp[0][arr[0]] = true;
+        }
+
+        for(int idx = 1;idx < n;idx++)
+        {
+            for(int target = 1;target <= sum;target++)
             {
-                dp[i][j] = -1;
+                boolean notTake = dp[idx - 1][target];
+                boolean take = false;
+                if(arr[idx] <= target)
+                {
+                    take = dp[idx - 1][target - arr[idx]];
+                }
+                dp[idx][target] = notTake || take;
             }
         }
 
-        return fMemoi(n - 1,sum,arr,dp);
+        return dp[n - 1][sum];
+
+        // Memoization
+        // int[][] dp = new int[n][sum + 1];
+        // for(int i = 0;i < n;i++)
+        // {
+        //     for(int j = 0;j <= sum;j++)
+        //     {
+        //         dp[i][j] = -1;
+        //     }
+        // }
+
+        // return fMemoi(n - 1,sum,arr,dp);
 
         // Recursion
         // return f(n - 1,sum,arr);
