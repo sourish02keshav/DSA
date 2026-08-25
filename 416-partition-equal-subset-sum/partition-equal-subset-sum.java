@@ -18,33 +18,62 @@ class Solution {
 
     public boolean isSubsetSum(int n,int sum,int[] arr) {
 
-        // Tabulation
+        // Space Optimization
 
-        boolean[][] dp = new boolean[n][sum + 1];
-        for(int i = 0;i < n;i++)
-        {
-            dp[i][0] = true;
-        }
+        boolean[] prev = new boolean[sum + 1];
+
+        prev[0] = true;
+
         if(arr[0] <= sum)
         {
-            dp[0][arr[0]] = true;
+            prev[arr[0]] = true;
         }
 
         for(int idx = 1;idx < n;idx++)
         {
+            boolean[] curr = new boolean[sum + 1];
             for(int target = 1;target <= sum;target++)
             {
-                boolean notTake = dp[idx - 1][target];
+                boolean notTake = prev[target];
                 boolean take = false;
                 if(arr[idx] <= target)
                 {
-                    take = dp[idx - 1][target - arr[idx]];
+                    take = prev[target - arr[idx]];
                 }
-                dp[idx][target] = notTake || take;
+                curr[target] = notTake || take;
             }
+            prev = curr;
         }
 
-        return dp[n - 1][sum];
+        return prev[sum];
+
+        // Tabulation
+
+        // boolean[][] dp = new boolean[n][sum + 1];
+        // for(int i = 0;i < n;i++)
+        // {
+        //     dp[i][0] = true;
+        // }
+        // if(arr[0] <= sum)
+        // {
+        //     dp[0][arr[0]] = true;
+        // }
+
+        // for(int idx = 1;idx < n;idx++)
+        // {
+        //     for(int target = 1;target <= sum;target++)
+        //     {
+        //         boolean notTake = dp[idx - 1][target];
+        //         boolean take = false;
+        //         if(arr[idx] <= target)
+        //         {
+        //             take = dp[idx - 1][target - arr[idx]];
+        //         }
+        //         dp[idx][target] = notTake || take;
+        //     }
+        // }
+
+        // return dp[n - 1][sum];
 
         // Memoization
         // int[][] dp = new int[n][sum + 1];
