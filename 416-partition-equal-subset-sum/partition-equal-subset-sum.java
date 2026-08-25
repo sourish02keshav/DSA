@@ -18,7 +18,7 @@ class Solution {
 
     public boolean isSubsetSum(int n,int sum,int[] arr) {
 
-        // Space Optimization
+        // Space Optimization - TC - O(n * target) and SC - O(target)
 
         boolean[] prev = new boolean[sum + 1];
 
@@ -47,7 +47,7 @@ class Solution {
 
         return prev[sum];
 
-        // Tabulation
+        // Tabulation - TC - O(n * target) and SC - O(n * target)
 
         // boolean[][] dp = new boolean[n][sum + 1];
         // for(int i = 0;i < n;i++)
@@ -75,7 +75,7 @@ class Solution {
 
         // return dp[n - 1][sum];
 
-        // Memoization
+        // Memoization - O(n * target) and SC - O(n * target) + O(n)
         // int[][] dp = new int[n][sum + 1];
         // for(int i = 0;i < n;i++)
         // {
@@ -87,7 +87,7 @@ class Solution {
 
         // return fMemoi(n - 1,sum,arr,dp);
 
-        // Recursion
+        // Recursion - TC - O(2^n) and SC - O(n)
         // return f(n - 1,sum,arr);
 
     }
