@@ -72,39 +72,74 @@ class Solution {
 
         int[][] dp = new int[n][sum + 1];
 
-        // Tabulation
+        // Space Optimization
 
-        for(int j = 0;j <= sum;j++)
+        int[] prev = new int[sum + 1];
+
+        if(nums[0] == 0)
         {
-            if(nums[0] == 0 && j == 0)
-            {
-                dp[0][j] = 2;
-            }
-            else if(nums[0] == j || j == 0)
-            {
-                dp[0][j] = 1;
-            }
-            else
-            {
-                dp[0][j] = 0;
-            }
+            prev[0] = 2;
+        }
+        else
+        {
+            prev[0] = 1;
+        }
+        if(nums[0] != 0 && nums[0] <= sum)
+        {
+            prev[nums[0]] = 1;
         }
 
         for(int idx = 1;idx < n;idx++)
         {
-            for(int tar = 0;tar <= sum;tar++)
+            int[] curr = new int[sum + 1];
+            for(int tar= 0;tar <= sum;tar++)
             {
-                int notTake = dp[idx - 1][tar];
+                int notTake = prev[tar];
                 int take = 0;
                 if(nums[idx] <= tar)
                 {
-                    take = dp[idx - 1][tar - nums[idx]];
+                    take = prev[tar - nums[idx]];
                 }
-                dp[idx][tar] = take + notTake;
+                curr[tar] = take + notTake;
             }
+            prev = curr;
         }
 
-        return dp[n - 1][sum];
+        return prev[sum];
+
+        // Tabulation
+
+        // for(int j = 0;j <= sum;j++)
+        // {
+        //     if(nums[0] == 0 && j == 0)
+        //     {
+        //         dp[0][j] = 2;
+        //     }
+        //     else if(nums[0] == j || j == 0)
+        //     {
+        //         dp[0][j] = 1;
+        //     }
+        //     else
+        //     {
+        //         dp[0][j] = 0;
+        //     }
+        // }
+
+        // for(int idx = 1;idx < n;idx++)
+        // {
+        //     for(int tar = 0;tar <= sum;tar++)
+        //     {
+        //         int notTake = dp[idx - 1][tar];
+        //         int take = 0;
+        //         if(nums[idx] <= tar)
+        //         {
+        //             take = dp[idx - 1][tar - nums[idx]];
+        //         }
+        //         dp[idx][tar] = take + notTake;
+        //     }
+        // }
+
+        // return dp[n - 1][sum];
 
         // Memoization
 
