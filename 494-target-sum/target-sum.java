@@ -72,17 +72,51 @@ class Solution {
 
         int[][] dp = new int[n][sum + 1];
 
-        // Memoization
+        // Tabulation
 
-        for(int i = 0;i < n;i++)
+        for(int j = 0;j <= sum;j++)
         {
-            for(int j = 0;j <= sum;j++)
+            if(nums[0] == 0 && j == 0)
             {
-                dp[i][j] = -1;
+                dp[0][j] = 2;
+            }
+            else if(nums[0] == j || j == 0)
+            {
+                dp[0][j] = 1;
+            }
+            else
+            {
+                dp[0][j] = 0;
             }
         }
 
-        return fMemoi(n - 1,sum,nums,dp);
+        for(int idx = 1;idx < n;idx++)
+        {
+            for(int tar = 0;tar <= sum;tar++)
+            {
+                int notTake = dp[idx - 1][tar];
+                int take = 0;
+                if(nums[idx] <= tar)
+                {
+                    take = dp[idx - 1][tar - nums[idx]];
+                }
+                dp[idx][tar] = take + notTake;
+            }
+        }
+
+        return dp[n - 1][sum];
+
+        // Memoization
+
+        // for(int i = 0;i < n;i++)
+        // {
+        //     for(int j = 0;j <= sum;j++)
+        //     {
+        //         dp[i][j] = -1;
+        //     }
+        // }
+
+        // return fMemoi(n - 1,sum,nums,dp);
 
         // Recursion
         // return f(n - 1,sum,nums);
