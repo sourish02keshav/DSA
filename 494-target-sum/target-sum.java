@@ -1,27 +1,27 @@
 class Solution {
 
-    int f(int idx,int target,int[] arr)
+    public int f(int idx,int sum,int[] arr)
     {
         if(idx == 0)
         {
-            if(arr[0] == 0 && target == 0)
+            if(arr[idx] == 0 && sum == 0)
             {
                 return 2;
             }
-            else if(target == 0 || arr[0] == target)
+            else if(arr[idx] == sum || sum == 0)
             {
                 return 1;
             }
-            else 
+            else
             {
                 return 0;
             }
         }
-        int notTake = f(idx - 1,target,arr);
+        int notTake = f(idx - 1,sum,arr);
         int take = 0;
-        if(arr[idx] <= target)
+        if(arr[idx] <= sum)
         {
-            take = f(idx - 1,target - arr[idx],arr);
+            take = f(idx - 1,sum - arr[idx],arr);
         }
         return take + notTake;
     }
@@ -39,9 +39,7 @@ class Solution {
         {
             return 0;
         }
-        else
-        {
-            return f(n - 1,sum,nums);
-        }
+        return f(n - 1,sum,nums);
+
     }
 }
