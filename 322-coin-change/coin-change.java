@@ -3,7 +3,7 @@ class Solution {
         int n = coins.length;
         int[][] dp = new int[n][amount + 1];
 
-        // Space Optimization
+        // Space Optimization - Memoization - TC - O(n * amount) and SC - O(amount)
 
         int[] prev = new int[amount + 1];
         for(int j = 0;j <= amount;j++)
@@ -40,7 +40,7 @@ class Solution {
         }
         return prev[amount];
 
-        // Tabulation
+        // Tabulation - Memoization - TC - O(n * amount) and SC - O(n * amount)
 
         // for(int j = 0;j <= amount;j++)
         // {
@@ -73,7 +73,7 @@ class Solution {
         // }
         // return dp[n - 1][amount];
 
-        // Memoization
+        // Memoization - TC - O(n * amount) and SC - O(n * amount) + O(amount)
 
         // for(int i = 0;i < n;i++)
         // {
@@ -85,7 +85,7 @@ class Solution {
 
         // int ans = fMemoi(n - 1,amount,coins,dp);
 
-        // Recursion
+        // Recursion - TC - Exponential time and SC - O(amount)
         // int ans = f(n - 1,coins,amount);
 
         // if(ans >= 1e7)
