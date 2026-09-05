@@ -1,5 +1,35 @@
 class Solution {
 
+    public int fMemoi(int idx,int sum,int[] arr,int[][] dp)
+    {
+        if(idx == 0)
+        {
+            if(arr[idx] == 0 && sum == 0)
+            {
+                return 2;
+            }
+            else if(arr[idx] == sum || sum == 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        if(dp[idx][sum] != -1)
+        {
+            return dp[idx][sum];
+        }
+        int notTake = fMemoi(idx - 1,sum,arr,dp);
+        int take = 0;
+        if(arr[idx] <= sum)
+        {
+            take = fMemoi(idx - 1,sum - arr[idx],arr,dp);
+        }
+        return dp[idx][sum] = take + notTake;
+    }
+
     public int f(int idx,int sum,int[] arr)
     {
         if(idx == 0)
@@ -39,7 +69,23 @@ class Solution {
         {
             return 0;
         }
-        return f(n - 1,sum,nums);
+
+        int[][] dp = new int[n][sum + 1];
+
+        // Memoization
+
+        for(int i = 0;i < n;i++)
+        {
+            for(int j = 0;j <= sum;j++)
+            {
+                dp[i][j] = -1;
+            }
+        }
+
+        return fMemoi(n - 1,sum,nums,dp);
+
+        // Recursion
+        // return f(n - 1,sum,nums);
 
     }
 }
