@@ -8,18 +8,34 @@ class Solution {
         }
 
         int[][] dp = new int[m + 1][m + 1];
-
-        // Memoization
-
-        for(int i = 0;i <= m;i++)
+        for(int i = 1;i <= m;i++)
         {
-            for(int j = 0;j <= m;j++)
+            for(int j = 1;j <= m;j++)
             {
-                dp[i][j] = -1;
+                if(s.charAt(i - 1) == rev.charAt(j - 1))
+                {
+                    dp[i][j] = 1 + dp[i - 1][j - 1];
+                }
+                else
+                {
+                    dp[i][j] = Math.max(dp[i - 1][j],dp[i][j - 1]);
+                }
             }
         }
 
-        int lcs = fMemoi(m,m,s,rev,dp);
+        int lcs = dp[m][m];
+
+        // Memoization
+
+        // for(int i = 0;i <= m;i++)
+        // {
+        //     for(int j = 0;j <= m;j++)
+        //     {
+        //         dp[i][j] = -1;
+        //     }
+        // }
+
+        // int lcs = fMemoi(m,m,s,rev,dp);
 
         // Recursion
         // int lcs = f(m,m,s,rev);
