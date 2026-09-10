@@ -8,24 +8,50 @@ class Solution {
         }
 
         int[][] dp = new int[m + 1][m + 1];
+
+        // Space Optimization - TC - O(m * n) and SC - O(m)
+
+        int[] prev = new int[m + 1];
+
         for(int i = 1;i <= m;i++)
         {
+            int[] curr = new int[m + 1];
             for(int j = 1;j <= m;j++)
             {
                 if(s.charAt(i - 1) == rev.charAt(j - 1))
                 {
-                    dp[i][j] = 1 + dp[i - 1][j - 1];
+                    curr[j] = 1 + prev[j - 1];
                 }
                 else
                 {
-                    dp[i][j] = Math.max(dp[i - 1][j],dp[i][j - 1]);
+                    curr[j] = Math.max(prev[j],curr[j - 1]);
                 }
             }
+            prev = curr;
         }
 
-        int lcs = dp[m][m];
+        int lcs = prev[m];
 
-        // Memoization
+        // Tabulation - TC - O(m * n) and SC - O(m * n)
+
+        // for(int i = 1;i <= m;i++)
+        // {
+        //     for(int j = 1;j <= m;j++)
+        //     {
+        //         if(s.charAt(i - 1) == rev.charAt(j - 1))
+        //         {
+        //             dp[i][j] = 1 + dp[i - 1][j - 1];
+        //         }
+        //         else
+        //         {
+        //             dp[i][j] = Math.max(dp[i - 1][j],dp[i][j - 1]);
+        //         }
+        //     }
+        // }
+
+        // int lcs = dp[m][m];
+
+        // Memoization - TC - O(m * n) and SC - O(m * n) and O(m + n)
 
         // for(int i = 0;i <= m;i++)
         // {
@@ -37,7 +63,7 @@ class Solution {
 
         // int lcs = fMemoi(m,m,s,rev,dp);
 
-        // Recursion
+        // Recursion - TC - O(2^m * 2^n) approx exponential and SC - O(m + n)
         // int lcs = f(m,m,s,rev);
         return m - lcs;   
     }
