@@ -5,16 +5,32 @@ class Solution {
         int n = word2.length();
         int[][] dp = new int[m + 1][n + 1];
 
-        // Memoization
-
-        for(int i = 0;i <= m;i++)
+        for(int i = 1;i <= m;i++)
         {
-            for(int j = 0;j <= n;j++)
+            for(int j = 1;j <= n;j++)
             {
-                dp[i][j] = -1;
+                if(word1.charAt(i - 1) == word2.charAt(j - 1))
+                {
+                    dp[i][j] = 1 + dp[i - 1][j - 1];
+                }
+                else
+                {
+                    dp[i][j] = Math.max(dp[i - 1][j],dp[i][j -1]);
+                }
             }
         }
-        int lcs = fMemoi(m,n,word1,word2,dp);
+        int lcs = dp[m][n];
+
+        // Memoization
+
+        // for(int i = 0;i <= m;i++)
+        // {
+        //     for(int j = 0;j <= n;j++)
+        //     {
+        //         dp[i][j] = -1;
+        //     }
+        // }
+        // int lcs = fMemoi(m,n,word1,word2,dp);
 
         // Recursion
         // int lcs = f(m,n,word1,word2);
