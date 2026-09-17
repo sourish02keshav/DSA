@@ -4,15 +4,42 @@ class Solution {
         int n = t.length();
         int[][] dp = new int[m + 1][n + 1];
 
-        // Memoization
+        // Tabulation
+
         for(int i = 0;i <= m;i++)
         {
-            for(int j = 0;j <= n;j++)
+            dp[i][0] = 1;
+        }
+        for(int j = 1;j <= n;j++)
+        {
+            dp[0][j] = 0;
+        }
+
+        for(int i = 1;i <= m;i++)
+        {
+            for(int j = 1;j <= n;j++)
             {
-                dp[i][j] = -1;
+                if(s.charAt(i - 1) == t.charAt(j - 1))
+                {
+                    dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j];
+                }
+                else
+                {
+                    dp[i][j] = dp[i - 1][j];
+                }
             }
         }
-        return fMemoi(m,n,s,t,dp);
+        return dp[m][n];
+
+        // Memoization - TC - O(m * n) and SC - O(m * n) and O(m + n)
+        // for(int i = 0;i <= m;i++)
+        // {
+        //     for(int j = 0;j <= n;j++)
+        //     {
+        //         dp[i][j] = -1;
+        //     }
+        // }
+        // return fMemoi(m,n,s,t,dp);
 
         // Recursion - TC - O((2 ^ n) * (2 ^ m)) approx O(exponentail) and SC - O(m + n)
         // return f(m,n,s,t);
