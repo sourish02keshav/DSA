@@ -4,32 +4,56 @@ class Solution {
         int n = t.length();
         int[][] dp = new int[m + 1][n + 1];
 
-        // Tabulation
+        // Space Optimization
 
-        for(int i = 0;i <= m;i++)
-        {
-            dp[i][0] = 1;
-        }
-        for(int j = 1;j <= n;j++)
-        {
-            dp[0][j] = 0;
-        }
+        int[] prev = new int[n + 1];
+        prev[0] = 1;
 
         for(int i = 1;i <= m;i++)
         {
+            int[] curr = new int[n + 1];
+            curr[0] = 1;
             for(int j = 1;j <= n;j++)
             {
                 if(s.charAt(i - 1) == t.charAt(j - 1))
                 {
-                    dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j];
+                    curr[j] = prev[j - 1] + prev[j];
                 }
                 else
                 {
-                    dp[i][j] = dp[i - 1][j];
+                    curr[j] = prev[j];
                 }
             }
+            prev = curr;
         }
-        return dp[m][n];
+        return prev[n];
+
+        // Tabulation - TC - O(m * n) and SC - O(m * n)
+
+        // for(int i = 0;i <= m;i++)
+        // {
+        //     dp[i][0] = 1;
+        // }
+        // for(int j = 1;j <= n;j++)
+        // {
+        //     dp[0][j] = 0;
+        // }
+
+        // for(int i = 1;i <= m;i++)
+        // {
+        //     for(int j = 1;j <= n;j++)
+        //     {
+        //         if(s.charAt(i - 1) == t.charAt(j - 1))
+        //         {
+        //             dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j];
+        //         }
+        //         else
+        //         {
+        //             dp[i][j] = dp[i - 1][j];
+        //         }
+        //     }
+        // }
+        // return dp[m][n];
 
         // Memoization - TC - O(m * n) and SC - O(m * n) and O(m + n)
         // for(int i = 0;i <= m;i++)
