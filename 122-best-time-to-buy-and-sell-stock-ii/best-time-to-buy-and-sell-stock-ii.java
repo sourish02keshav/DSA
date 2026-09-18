@@ -1,21 +1,39 @@
 class Solution {
     public int maxProfit(int[] prices) {
         int n = prices.length;
-        boolean buy = true;
         int[][] dp = new int[n + 1][2];
 
-        // Memoization
-        int b = 1;
-        for(int i = 0;i <= n;i++)
+        // Tabulation
+        dp[n][0] = dp[n][1] = 0;
+        for(int idx = n - 1;idx >= 0;idx--)
         {
-            for(int j = 0;j < 2;j++)
+            for(int buy = 0;buy < 2;buy++)
             {
-                dp[i][j] = -1;
+                if(buy == 1)
+                {
+                    dp[idx][1] = Math.max(-prices[idx] + dp[idx + 1][0],dp[idx + 1][1]);
+                }
+                else
+                {
+                    dp[idx][0] = Math.max(prices[idx] + dp[idx + 1][1],dp[idx + 1][0]);
+                }
             }
         }
-        return fMemoi(0,n,b,prices,dp);
+        return dp[0][1];
+
+        // Memoization
+        // int b = 1;
+        // for(int i = 0;i <= n;i++)
+        // {
+        //     for(int j = 0;j < 2;j++)
+        //     {
+        //         dp[i][j] = -1;
+        //     }
+        // }
+        // return fMemoi(0,n,b,prices,dp);
 
         // Recursion
+        // boolean buy = true;
         // return f(0,n,buy,prices);
     }
 
