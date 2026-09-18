@@ -3,16 +3,88 @@ class Solution {
         int m = s.length();
         int n = p.length();
 
-        // Memoization
-        int[][] dp = new int[m + 1][n + 1];
-        for(int i = 0;i <= m;i++)
+        // Space Optimization - TC 
+        boolean[] prev = new boolean[n + 1];
+        prev[0] = true;
+        for(int j = 1;j <= n;j++)
         {
-            for(int j = 0;j <= n;j++)
+            prev[j] = true;
+            for(int k = 1;k <= j;k++)
             {
-                dp[i][j] = -1;
+                if(p.charAt(k - 1) != '*')
+                {
+                    prev[j] = false;
+                    break;
+                }
             }
         }
-        return fMemoi(m,n,s,p,dp);
+
+        for(int i = 1;i <= m;i++)
+        {
+            boolean[] curr = new boolean[n + 1];
+            for(int j = 1;j <= n;j++)
+            {
+                if(s.charAt(i - 1) == p.charAt(j - 1) || p.charAt(j - 1) == '?')
+                {
+                    curr[j] = prev[j - 1];
+                }
+                else if(p.charAt(j - 1) == '*')
+                {
+                    curr[j] = prev[j] || curr[j - 1];
+                }
+            }
+            prev = curr;
+        }
+        return prev[n];
+
+
+        // Tabulation - TC - O(m * n) and SC - O(m * n)
+        // boolean[][] dp = new boolean[m + 1][n + 1];
+        // dp[0][0] = true;
+        // for(int i = 1;i <= m;i++)
+        // {
+        //     dp[i][0] = false;
+        // }
+        // for(int j = 1;j <= n;j++)
+        // {
+        //     boolean flag = true;
+        //     for(int k = 1;k <= j;k++)
+        //     {
+        //         if(p.charAt(k - 1) != '*')
+        //         {
+        //             flag = false;
+        //             break;
+        //         }
+        //     }
+        //     dp[0][j] = flag;
+        // }
+
+        // for(int i = 1;i <= m;i++)
+        // {
+        //     for(int j = 1;j <= n;j++)
+        //     {
+        //         if(s.charAt(i - 1) == p.charAt(j - 1) || p.charAt(j - 1) == '?')
+        //         {
+        //             dp[i][j] = dp[i - 1][j - 1];
+        //         }
+        //         else if(p.charAt(j - 1) == '*')
+        //         {
+        //             dp[i][j] = dp[i - 1][j] || dp[i][j - 1];
+        //         }
+        //     }
+        // }
+        // return dp[m][n];
+
+        // Memoization
+        // int[][] dp = new int[m + 1][n + 1];
+        // for(int i = 0;i <= m;i++)
+        // {
+        //     for(int j = 0;j <= n;j++)
+        //     {
+        //         dp[i][j] = -1;
+        //     }
+        // }
+        // return fMemoi(m,n,s,p,dp);
 
         // Recursion - TC - O(exponential) and SC - O(m + n)
         // return f(m,n,s,p);
