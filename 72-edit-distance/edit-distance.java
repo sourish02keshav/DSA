@@ -4,32 +4,60 @@ class Solution {
         int n = word2.length();
         int[][] dp = new int[m + 1][n + 1];
 
-        for(int i = 0;i <= m;i++)
-        {
-            dp[i][0] = i;
-        }
+        // Space Optimization
+
+        int[] prev = new int[n + 1];
+
         for(int j = 0;j <= n;j++)
         {
-            dp[0][j] = j;
+            prev[j] = j;
         }
-
         for(int i = 1;i <= m;i++)
         {
+            int[] curr = new int[n + 1];
+            curr[0] = i;
             for(int j = 1;j <= n;j++)
             {
                 if(word1.charAt(i - 1) == word2.charAt(j - 1))
                 {
-                    dp[i][j] = dp[i - 1][j - 1];
+                    curr[j] = prev[j - 1];
                 }
                 else
                 {
-                    dp[i][j] = 1 + Math.min(dp[i - 1][j],
-                    Math.min(dp[i][j - 1],dp[i - 1][j - 1]));
+                    curr[j] = 1 + Math.min(prev[j],Math.min(curr[j - 1],prev[j - 1]));
                 }
             }
+            prev = curr;
         }
+        return prev[n];
 
-        return dp[m][n];
+        // Tabulation - TC - O(m * n) an SC - O(m * n)
+        // for(int i = 0;i <= m;i++)
+        // {
+        //     dp[i][0] = i;
+        // }
+        // for(int j = 0;j <= n;j++)
+        // {
+        //     dp[0][j] = j;
+        // }
+
+        // for(int i = 1;i <= m;i++)
+        // {
+        //     for(int j = 1;j <= n;j++)
+        //     {
+        //         if(word1.charAt(i - 1) == word2.charAt(j - 1))
+        //         {
+        //             dp[i][j] = dp[i - 1][j - 1];
+        //         }
+        //         else
+        //         {
+        //             dp[i][j] = 1 + Math.min(dp[i - 1][j],
+        //             Math.min(dp[i][j - 1],dp[i - 1][j - 1]));
+        //         }
+        //     }
+        // }
+
+        // return dp[m][n];
 
         //Memoziation - TC - O(m * n) and SC - O(m * n) and O(m + n)
         // for(int i = 0;i <= m;i++)
