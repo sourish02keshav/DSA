@@ -2,7 +2,7 @@ class Solution {
     public int maxProfit(int[] prices) {
         int n = prices.length;
 
-        // Space Optimization
+        // Space Optimization - TC - O(n) and SC - O(1)
 
         int[] front1 = new int[2];
         int[] front2 = new int[2];
@@ -17,7 +17,7 @@ class Solution {
         }
         return front1[1];
 
-        // Tabulation
+        // Tabulation - TC - O(n * 2) and SC - O(n * 2)
         // int[][] dp = new int[n + 2][2];
         // for(int idx = n - 1;idx >= 0;idx--)
         // {
@@ -35,7 +35,7 @@ class Solution {
         // }
         // return dp[0][1];
 
-        // Memoization
+        // Memoization - TC - O(n * 2) and SC - O(n * 2) and O(n)
         // int[][] dp = new int[n + 1][2];
         // for(int i = 0;i <= n;i++)
         // {
@@ -46,7 +46,7 @@ class Solution {
         // }
         // return fMemoi(0,1,n,prices,dp);
 
-        // Recursion
+        // Recursion - TC - O(exponential) and SC - O(n)
         // return f(0,1,n,prices);
     }
 
