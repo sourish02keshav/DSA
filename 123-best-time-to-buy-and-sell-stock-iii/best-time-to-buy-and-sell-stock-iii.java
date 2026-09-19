@@ -3,17 +3,39 @@ class Solution {
         int n = prices.length;
         int[][][] dp = new int[n + 1][2][3];
 
-        for(int i = 0;i <= n;i++)
+        for(int idx = n - 1;idx >= 0;idx--)
         {
-            for(int j = 0;j <= 1;j++)
+            for(int buy = 0;buy <= 1;buy++)
             {
-                for(int k = 0;k <= 2;k++)
+                for(int cap = 1;cap <= 2;cap++)
                 {
-                    dp[i][j][k] = -1;
+                    if(buy == 1)
+                    {
+                        dp[idx][buy][cap] = Math.max(-prices[idx] + dp[idx + 1][0][cap],
+                        dp[idx + 1][buy][cap]);
+                    }
+                    else
+                    {
+                        dp[idx][buy][cap] = Math.max(prices[idx] + dp[idx + 1][1][cap - 1],
+                        dp[idx+ 1][buy][cap]);
+                    }
                 }
             }
         }
-        return fMemoi(0,1,2,n,prices,dp);
+        return dp[0][1][2];
+        
+        // Memoization - TC - O(n * 2 * 3) and SC - O(n * 2 * 3) and O(n)
+        // for(int i = 0;i <= n;i++)
+        // {
+        //     for(int j = 0;j <= 1;j++)
+        //     {
+        //         for(int k = 0;k <= 2;k++)
+        //         {
+        //             dp[i][j][k] = -1;
+        //         }
+        //     }
+        // }
+        // return fMemoi(0,1,2,n,prices,dp);
 
         // Recursion - O(exponential) and SC - O(n)
         // return f(0,1,2,n,prices);
