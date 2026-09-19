@@ -3,14 +3,23 @@ class Solution {
         int n = prices.length;
         int[][] dp = new int[n + 1][2];
 
-        for(int i = 0;i <= n;i++)
+        // Tabulation
+        for(int idx = n - 1;idx >= 0;idx--)
         {
-            for(int j = 0;j <= 1;j++)
-            {
-                dp[i][j] = -1;
-            }
+            dp[idx][1] = Math.max(-prices[idx] + dp[idx + 1][0],dp[idx + 1][1]);
+            dp[idx][0] = Math.max(prices[idx] - fee + dp[idx + 1][1],dp[idx + 1][0]);
         }
-        return fMemoi(0,1,fee,n,prices,dp);
+        return dp[0][1];
+
+        // Memoization
+        // for(int i = 0;i <= n;i++)
+        // {
+        //     for(int j = 0;j <= 1;j++)
+        //     {
+        //         dp[i][j] = -1;
+        //     }
+        // }
+        // return fMemoi(0,1,fee,n,prices,dp);
 
         // Recursion
         // return f(0,1,fee,n,prices);
