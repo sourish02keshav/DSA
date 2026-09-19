@@ -3,13 +3,24 @@ class Solution {
         int n = prices.length;
         int[][] dp = new int[n + 1][2];
 
-        // Tabulation
+        // Space Optimization
+        int[] ahead = new int[2];
+        int[] curr = new int[2];
         for(int idx = n - 1;idx >= 0;idx--)
         {
-            dp[idx][1] = Math.max(-prices[idx] + dp[idx + 1][0],dp[idx + 1][1]);
-            dp[idx][0] = Math.max(prices[idx] - fee + dp[idx + 1][1],dp[idx + 1][0]);
+            curr[1] = Math.max(-prices[idx] + ahead[0],ahead[1]);
+            curr[0] = Math.max(prices[idx] - fee + ahead[1],ahead[0]);
+            ahead = curr;
         }
-        return dp[0][1];
+        return ahead[1];
+
+        // Tabulation
+        // for(int idx = n - 1;idx >= 0;idx--)
+        // {
+        //     dp[idx][1] = Math.max(-prices[idx] + dp[idx + 1][0],dp[idx + 1][1]);
+        //     dp[idx][0] = Math.max(prices[idx] - fee + dp[idx + 1][1],dp[idx + 1][0]);
+        // }
+        // return dp[0][1];
 
         // Memoization
         // for(int i = 0;i <= n;i++)
