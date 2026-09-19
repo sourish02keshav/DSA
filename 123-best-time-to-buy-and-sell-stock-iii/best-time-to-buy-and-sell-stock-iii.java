@@ -3,7 +3,7 @@ class Solution {
         int n = prices.length;
         int[][][] dp = new int[n + 1][2][3];
 
-        // Space Optimization
+        // Space Optimization - TC - O(n * 2 * 3) and SC - O(2 * 3)
         int[][] ahead = new int[2][3];
         int[][] curr = new int[2][3];
         for(int idx = n - 1;idx >= 0;idx--)
