@@ -3,7 +3,7 @@ class Solution {
         int n = prices.length;
         int[][][] dp = new int[n + 1][2][k + 1];
 
-        // Space Optimization
+        // Space Optimization - TC - O(n * 2 * k) and SC - O(2 * k)
 
         int[][] ahead = new int[2][k + 1];
         int[][] curr = new int[2][k + 1];
@@ -29,7 +29,7 @@ class Solution {
         }
         return ahead[1][k];
 
-        // Tabulation
+        // Tabulation - TC - O(n * 2 * k) and SC - O(n * 2 * k)
         // for(int idx = n - 1;idx >= 0;idx--)
         // {
         //     for(int buy = 0;buy <= 1;buy++)
@@ -51,7 +51,7 @@ class Solution {
         // }
         // return dp[0][1][k];
 
-        // Memoization
+        // Memoization - TC - O(n * 2 * k) and SC - O(2 * k) and O(n)
         // for(int i = 0;i <= n;i++)
         // {
         //     for(int j = 0;j <= 1;j++)
@@ -64,7 +64,7 @@ class Solution {
         // }
         // return fMemoi(0,1,k,n,prices,dp);
 
-        // Recursion
+        // Recursion - O(exponential) and SC - O(n)
         // return f(0,1,k,n,prices);
     }
 
