@@ -2,34 +2,18 @@ class Solution {
     public int lengthOfLIS(int[] nums) {
         int n = nums.length;
 
-        // Tabulation
-        int[][] dp = new int[n + 1][n + 1];
-        for(int idx = n - 1;idx >= 0;idx--)
+        // Memoization - TC - O()
+        int[][] dp = new int[n][n + 1];
+        for(int i = 0;i < n;i++)
         {
-            for(int prevIdx = idx - 1;prevIdx >= -1;prevIdx--)
+            for(int j = 0;j <= n;j++)
             {
-                int len = dp[idx + 1][prevIdx + 1];
-                if(prevIdx == -1 || nums[idx] > nums[prevIdx])
-                {
-                    len = Math.max(len,1 + dp[idx + 1][idx + 1]);
-                }
-                dp[idx][prevIdx + 1] = len;
+                dp[i][j] = -1;
             }
         }
-        return dp[0][-1 + 1];
+        return fMemoi(0,-1,n,nums,dp);
 
-        // Memoization
-        // int[][] dp = new int[n][n + 1];
-        // for(int i = 0;i < n;i++)
-        // {
-        //     for(int j = 0;j <= n;j++)
-        //     {
-        //         dp[i][j] = -1;
-        //     }
-        // }
-        // return fMemoi(0,-1,n,nums,dp);
-
-        // Recursion
+        // Recursion - TC - O(2 ^ n) and SC - O(n)
         // return f(0,-1,n,nums);
     }
 
@@ -48,7 +32,7 @@ class Solution {
         {
             len = Math.max(len,1 + fMemoi(idx + 1,idx,n,arr,dp));
         }
-        return len;
+        return dp[idx][prevIdx + 1] = len;
     }
 
     public int f(int idx,int prevIdx,int n,int[] arr)
