@@ -1,16 +1,33 @@
 class Solution {
     public int lengthOfLIS(int[] nums) {
         int n = nums.length;
-        int[][] dp = new int[n][n + 1];
-        // Memoization
-        for(int i = 0;i < n;i++)
+        int[][] dp = new int[n + 1][n + 1];
+
+        // Tabulation
+
+        for(int idx = n - 1;idx >= 0;idx--)
         {
-            for(int j = 0;j <= n;j++)
+            for(int prev_idx = idx - 1;prev_idx >= -1;prev_idx--)
             {
-                dp[i][j] = -1;
+                int len = dp[idx + 1][prev_idx + 1];
+                if(prev_idx == -1 || nums[idx] > nums[prev_idx])
+                {
+                    len = Math.max(len,1 + dp[idx + 1][idx + 1]);
+                }
+                dp[idx][prev_idx + 1] = len;
             }
         }
-        return fMemoi(0,-1,n,nums,dp);
+        return dp[0][-1 + 1];
+
+        // Memoization
+        // for(int i = 0;i < n;i++)
+        // {
+        //     for(int j = 0;j <= n;j++)
+        //     {
+        //         dp[i][j] = -1;
+        //     }
+        // }
+        // return fMemoi(0,-1,n,nums,dp);
 
         // Recursion
         // return f(0,-1,n,nums);
