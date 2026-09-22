@@ -3,21 +3,40 @@ class Solution {
         int n = nums.length;
         int[][] dp = new int[n + 1][n + 1];
 
-        // Tabulation
+        // Space optimization
 
+        int[] next = new int[n + 1];
+        int[] curr = new int[n + 1];
         for(int idx = n - 1;idx >= 0;idx--)
         {
             for(int prev_idx = idx - 1;prev_idx >= -1;prev_idx--)
             {
-                int len = dp[idx + 1][prev_idx + 1];
+                int len = next[prev_idx + 1];
                 if(prev_idx == -1 || nums[idx] > nums[prev_idx])
                 {
-                    len = Math.max(len,1 + dp[idx + 1][idx + 1]);
+                    len = Math.max(len,1 + next[idx + 1]);
                 }
-                dp[idx][prev_idx + 1] = len;
+                curr[prev_idx + 1] = len;
             }
+            next = curr;
         }
-        return dp[0][-1 + 1];
+        return next[-1 + 1];
+
+        // Tabulation
+
+        // for(int idx = n - 1;idx >= 0;idx--)
+        // {
+        //     for(int prev_idx = idx - 1;prev_idx >= -1;prev_idx--)
+        //     {
+        //         int len = dp[idx + 1][prev_idx + 1];
+        //         if(prev_idx == -1 || nums[idx] > nums[prev_idx])
+        //         {
+        //             len = Math.max(len,1 + dp[idx + 1][idx + 1]);
+        //         }
+        //         dp[idx][prev_idx + 1] = len;
+        //     }
+        // }
+        // return dp[0][-1 + 1];
 
         // Memoization
         // for(int i = 0;i < n;i++)
