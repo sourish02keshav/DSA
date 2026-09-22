@@ -2,21 +2,40 @@ class Solution {
     public int lengthOfLIS(int[] nums) {
         int n = nums.length;
 
-        // Tabulation - TC - O(n * n) and SC - O(n * n)
-        int[][] dp = new int[n + 1][n + 1];
+
+        // Space Optimization - TC - O(n * n) and SC - 2 * O(n)
+        int[] next = new int[n + 1];
+        int[] curr = new int[n + 1];
         for(int idx = n - 1;idx >= 0;idx--)
         {
             for(int prevIdx = idx - 1;prevIdx >= -1;prevIdx--)
             {
-                int len = dp[idx + 1][prevIdx + 1];
+                int len = next[prevIdx + 1];
                 if(prevIdx == -1 || nums[idx] > nums[prevIdx])
                 {
-                    len = Math.max(len,1 + dp[idx + 1][idx + 1]);
+                    len = Math.max(len,1 + next[idx + 1]);
                 }
-                dp[idx][prevIdx + 1] = len;
+                curr[prevIdx + 1] = len;
             }
+            next = curr;
         }
-        return dp[0][-1 + 1];
+        return next[-1 + 1];
+
+        // Tabulation - TC - O(n * n) and SC - O(n * n)
+        // int[][] dp = new int[n + 1][n + 1];
+        // for(int idx = n - 1;idx >= 0;idx--)
+        // {
+        //     for(int prevIdx = idx - 1;prevIdx >= -1;prevIdx--)
+        //     {
+        //         int len = dp[idx + 1][prevIdx + 1];
+        //         if(prevIdx == -1 || nums[idx] > nums[prevIdx])
+        //         {
+        //             len = Math.max(len,1 + dp[idx + 1][idx + 1]);
+        //         }
+        //         dp[idx][prevIdx + 1] = len;
+        //     }
+        // }
+        // return dp[0][-1 + 1];
 
         // Memoization - TC - O(n * n) and SC - O(n * n) and O(n)
         // int[][] dp = new int[n][n + 1];
