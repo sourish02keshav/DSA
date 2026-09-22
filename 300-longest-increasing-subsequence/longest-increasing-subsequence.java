@@ -1,44 +1,25 @@
 class Solution {
     public int lengthOfLIS(int[] nums) {
         int n = nums.length;
-        int[][] dp = new int[n + 1][n + 1];
-
-        // Space optimization
-
-        int[] next = new int[n + 1];
-        int[] curr = new int[n + 1];
-        for(int idx = n - 1;idx >= 0;idx--)
-        {
-            for(int prev_idx = idx - 1;prev_idx >= -1;prev_idx--)
-            {
-                int len = next[prev_idx + 1];
-                if(prev_idx == -1 || nums[idx] > nums[prev_idx])
-                {
-                    len = Math.max(len,1 + next[idx + 1]);
-                }
-                curr[prev_idx + 1] = len;
-            }
-            next = curr;
-        }
-        return next[-1 + 1];
 
         // Tabulation
-
-        // for(int idx = n - 1;idx >= 0;idx--)
-        // {
-        //     for(int prev_idx = idx - 1;prev_idx >= -1;prev_idx--)
-        //     {
-        //         int len = dp[idx + 1][prev_idx + 1];
-        //         if(prev_idx == -1 || nums[idx] > nums[prev_idx])
-        //         {
-        //             len = Math.max(len,1 + dp[idx + 1][idx + 1]);
-        //         }
-        //         dp[idx][prev_idx + 1] = len;
-        //     }
-        // }
-        // return dp[0][-1 + 1];
+        int[][] dp = new int[n + 1][n + 1];
+        for(int idx = n - 1;idx >= 0;idx--)
+        {
+            for(int prevIdx = idx - 1;prevIdx >= -1;prevIdx--)
+            {
+                int len = dp[idx + 1][prevIdx + 1];
+                if(prevIdx == -1 || nums[idx] > nums[prevIdx])
+                {
+                    len = Math.max(len,1 + dp[idx + 1][idx + 1]);
+                }
+                dp[idx][prevIdx + 1] = len;
+            }
+        }
+        return dp[0][-1 + 1];
 
         // Memoization
+        // int[][] dp = new int[n][n + 1];
         // for(int i = 0;i < n;i++)
         // {
         //     for(int j = 0;j <= n;j++)
@@ -52,33 +33,32 @@ class Solution {
         // return f(0,-1,n,nums);
     }
 
-    public int fMemoi(int idx,int prev_idx,int n,int[] arr,int[][] dp)
+    public int fMemoi(int idx,int prevIdx,int n,int[] arr,int[][] dp)
     {
         if(idx == n)
         {
             return 0;
         }
-        if(dp[idx][prev_idx + 1] != -1)
+        if(dp[idx][prevIdx + 1] != -1)
         {
-            return dp[idx][prev_idx + 1];
+            return dp[idx][prevIdx + 1];
         }
-        int len = fMemoi(idx + 1,prev_idx,n,arr,dp);
-        if(prev_idx == -1 || arr[idx] > arr[prev_idx])
+        int len = fMemoi(idx + 1,prevIdx,n,arr,dp);
+        if(prevIdx == -1 || arr[idx] > arr[prevIdx])
         {
             len = Math.max(len,1 + fMemoi(idx + 1,idx,n,arr,dp));
         }
-        return dp[idx][prev_idx + 1] = len;
+        return len;
     }
 
-
-    public int f(int idx,int prev_idx,int n,int[] arr)
+    public int f(int idx,int prevIdx,int n,int[] arr)
     {
         if(idx == n)
         {
             return 0;
         }
-        int len = f(idx + 1,prev_idx,n,arr);
-        if(prev_idx == -1 || arr[idx] > arr[prev_idx])
+        int len = f(idx + 1,prevIdx,n,arr);
+        if(prevIdx == -1 || arr[idx] > arr[prevIdx])
         {
             len = Math.max(len,1 + f(idx + 1,idx,n,arr));
         }
