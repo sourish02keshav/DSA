@@ -13,7 +13,6 @@ class Solution {
                 hash[s.charAt(left) - 'A']--;
                 left++;
             }
-            // changes = (right - left + 1) - maxFrequency;
             if(changes <= k)
             {
                 maxLength = Math.max(maxLength,right - left + 1);
