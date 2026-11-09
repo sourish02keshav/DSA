@@ -4,17 +4,18 @@ class Solution {
         int high = nums.length - 1;
         while(low <= high)
         {
-            int mid = (low + high) / 2;
+            int mid = low + (high - low) / 2;
             if(nums[mid] == target)
             {
                 return true;
             }
-            if(nums[mid] == nums[low] && nums[mid] == nums[high])
+            if(nums[low] == nums[mid] && nums[mid] == nums[high])
             {
                 low++;
                 high--;
+                continue;
             }
-            else if(nums[low] <= nums[mid])
+            if(nums[low] <= nums[mid])
             {
                 if(nums[low] <= target && target <= nums[mid])
                 {
